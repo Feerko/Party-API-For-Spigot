@@ -42,4 +42,13 @@ public class PartyManager extends JavaPlugin implements Deactivated {
 			return new PlayerParty(new Integer(id));
 		}
 	}
+
+	public PlayerParty getParty(player p) {
+		try (Jedis jedis = getConnection()) {
+			String id = jedis.get("paf:parties:players:" + p.getUniqueId() + ":id");
+			if (id == null)
+				return null;
+			return new PlayerParty(new Integer(id));
+		}
+	}
 }
